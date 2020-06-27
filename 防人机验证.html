@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <style>
+        body{
+            background: url('./bj.jpg') no-repeat;
+            background-size:cover;
+            margin: 0px;
+            padding: 0px;
+        }
+        input{
+            outline: none;
+            padding: 0px 10px;
+            width: 170px;
+            height: 22px;
+        }
+
+        .box{
+            width: 740px;
+            height: 260px;
+            margin: 0 auto;
+        }
+        .box h2{
+            text-align: center;
+        }
+        .box .from{
+            float: left;
+            padding:5px 0px 20px 0px;
+            width: 410px;
+            height: 260px;
+            background: #f7f0f0;
+            border-radius: 10px;
+            box-shadow: 1px 1px 1px gray;
+        }
+        .box .from form{
+            text-align: center;
+        }
+        .box .from form p{
+            position: relative;
+        }
+        .box .from form p .tips{
+            font-size: 12px;
+            display: none;
+            position: absolute;
+            top:0;
+            right:10px;
+            margin-top: 4px;
+            
+        }
+        .box .from form p .tips-phone{
+            font-size: 12px;
+            display: none;
+            position: absolute;
+            right:10px;
+            margin-top: 4px;
+            top:0px;
+        }
+        .box .from form p .tips-password{
+            font-size: 12px;
+            display: none;
+            position: absolute;
+            right:10px;
+            margin-top: 4px;
+            top:0px;
+        }
+        .box .from form p .tips-password2{
+            font-size: 12px;
+            display: none;
+            position: absolute;
+            right:10px;
+            margin-top: 4px;
+            top:0px;
+        }
+
+        .box .from form p label .btn {
+            outline: none;
+            width: 80px;
+            height: 26px;
+            border-radius: 10px;       
+        }
+        .box .from form p label .set{
+            margin-left: 20px;
+        }
+        /* 滑动验证 */
+        .box .test{
+            float: left;
+            margin-left: 40px;
+            width: 240px;
+            height: 280px;
+            background: #f7f0f0;
+            /* display: none; */
+        }
+        .box-bg{
+            height: 240px;
+            background: url("./1.png") no-repeat 0 0;
+            position: relative;
+        }
+
+        .block{
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 50px;
+        }
+        .slide-block{
+            background-image: url("./1.png");
+            background-repeat: no-repeat;
+            background-position: -200px -50px;
+            left: 0;
+            z-index: 2;
+        }
+
+        .white-block{
+            background-color: #fff;
+            left: 200px;
+            z-index: 1;
+        }
+        .slide{
+            height: 30px;
+            background-color: #ccc;
+            margin-top: 10px;
+            position: relative;
+        }
+        .move-block{
+            width: 40px;
+            height: 24px;
+            position: absolute;
+            top: 3px;
+            left: 0;
+            background-color: #f5f5f5;
+            z-index: 1;
+        }
+
+        .layer{
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            display: none;
+        }
+
+        /* 弹框 */
+        .box .spring-box{
+            width: 300px;
+            height: 120px;
+            border-radius: 20px;
+            background: rgba(119,100,100,.8);
+            z-index: 1000;
+            position: fixed;
+            top:0px;
+            /* left:calc(50% -70px); */
+            left: 360px;
+            display: none;
+        }
+        .box .spring-box .text{
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            width: 160px;
+            height: 25px;
+            margin: 30px auto;
+
+        } 
+        .box .spring-box .button{
+            float: left;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            /* background: #fff; */
+            border-radius: 10px;
+            position: absolute;
+            cursor: pointer;
+           
+        }
+        .box .spring-box .btn-left{
+            left: 10px;
+            bottom: 10px;
+            background: honeydew;
+        }
+        .box .spring-box .btn-right{
+            right: 10px;
+            bottom: 10px;
+           
+            background: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="from">
+            <h2>欢迎来到快乐基地</h2>
+            <form action="" id="submitdata">
+                <p><label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" name='username' id="username"></label>
+                    <span class="tips">书写错误</span>
+                </p>
+                <p><label>手&nbsp;机&nbsp;号：<input type="text" name="phone" id='phone'></label>
+                    <span class="tips-phone">填写错误</span>
+                </p>
+                <p><label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" id='password' placeholder="6位到9位"></label>
+                    <span class="tips-password">书写错误</span>
+                </p>
+                <p><label>确认密码:&nbsp;<input type="password" name='password2' id="password2"></label>
+                    <span class=" tips-password2">密码错误</span>
+                </p>
+                <p ><label ><input type="button" class="btn" value="注册">
+                    <input type="reset" class="btn set" value="重置"></label>
+                    
+                </p>
+            </form>
+        </div>
+        <div class="test">
+            <div class="box-bg">
+                <span class="slide-block block"></span>
+                <span class="white-block block"></span>
+            </div>
+            <div class="slide">
+                <span class="move-block"></span>
+                <span class="layer"></span>
+            </div>
+
+        </div>
+        <div class="spring-box">
+            <div class="text">请完成图片验证^__^</div>
+            <div class="button btn-left">确定</div>
+            <div class="button btn-right">取消</div>
+        </div>
+        <audio class="playmusic" src="./吴哥窟 (温柔女声).mp3" loop="loop">亲 您的浏览器不支持html5的audio标签</audio>
+    </div>
+    <script>
+        window.onload=()=>{
+
+            var username =document.querySelector('#username');
+            var phone =document.querySelector('#phone');
+            var password =document.querySelector('#password');
+            var password2 =document.querySelector('#password2');
+             
+            function query(selector) {
+                return document.querySelector(selector);
+            }
+
+            //音乐
+            function music(){
+                var playmusic = query('.playmusic');
+                playmusic.play();
+            }
+           
+            //获取滑轨
+            var slide = query('.slide');
+            var slideWidth = slide.offsetWidth;
+            console.log('slideWidth ==> ', slideWidth);
+
+            //随机生成白色块 150 <= left <= 250, top: 0 <= top <= 250
+            var whiteBlock = query('.white-block');
+            var whiteBlockWidth = whiteBlock.offsetWidth;
+           
+            
+            //滑动块 0 <= left <= 100, top: 0 <= top <= 250
+            var slideBlock = query('.slide-block');
+            var slideBlockWidth = slideBlock.offsetWidth;
+            console.log('slideBlockWidth ==> ', slideBlockWidth);
+
+            //随机生成坐标
+            function getPoint() {
+                //随机生成白色块坐标
+                var whiteMin = slideWidth / 2;
+                var whiteMax = slideWidth - whiteBlockWidth;
+
+                var x = Math.floor(Math.random() * (whiteMax - whiteMin + 1) + whiteMin);
+                var y = Math.ceil(Math.random() * whiteMax);
+
+                whiteBlock.style.left = x + 'px';
+                whiteBlock.style.top = y + 'px';
+
+                //随机生成滑动块坐标
+                var slideBlockMax = slideWidth / 2 - slideBlockWidth;
+                var x1 = Math.ceil(Math.random() * slideBlockMax);
+                slideBlock.style.left = x1 + 'px';
+                slideBlock.style.top = y + 'px';
+                slideBlock.style.backgroundPosition = -x + 'px ' + -y + 'px';
+
+                //设置移动块的left
+                moveBlock.style.left = x1 + 'px';
+            }
+
+            
+            //获取move-block
+            var moveBlock = query('.move-block');
+            var moveBlockWidth = moveBlock.offsetWidth;
+            console.log('moveBlockWidth ==> ', moveBlockWidth);
+
+            getPoint();
+            
+
+         
+                //遮罩层
+            var layer = query('.layer');
+            var x0 = 0;
+            moveBlock.onmousedown = (e)=>{
+                x0 = e.offsetX;
+
+                layer.style.display = 'block';
+            }
+            layer.onmouseup =  ()=> {
+                layer.style.display = 'none';
+
+                //获取滑动块的left
+                var moveBlockLeft = moveBlock.offsetLeft;
+                console.log('moveBlockLeft ==> ', moveBlockLeft);
+
+                //获取白色块的left
+                var whiteBlockLeft = whiteBlock.offsetLeft;
+                console.log('whiteBlockLeft ==> ', whiteBlockLeft);
+
+                if (Math.abs(moveBlockLeft - whiteBlockLeft) <= 5) {
+                    
+                    if(username.value == '' || phone.value == '' || password.value != password2.value){
+                        alert('先填写信息');
+                        getPoint();
+                    }else{
+                        //通过调用函数
+                        music()
+                        slideBlock.style.left = whiteBlockLeft + 'px';
+                        moveBlock.style.left = whiteBlockLeft + 'px';
+                    }                    
+                } else {
+                    getPoint();
+                }
+            }
+            layer.onmousemove = (e)=> {
+                //移动块的移动范围
+                var minLeft = 0;
+                var maxLeft = slideWidth - moveBlockWidth;
+
+                //移动的left
+                var left = e.offsetX - x0;
+
+                //控制left的范围
+                left = left >= maxLeft ? maxLeft : left <= minLeft ? minLeft : left;
+
+                moveBlock.style.left = left + 'px';
+
+                slideBlock.style.left = left + 'px';
+                
+            }
+            layer.onmouseout = ()=> {
+                // this.onmousemove = null;
+                layer.style.display = 'none';
+            }
+           
+           
+           
+               
+            
+        }
+
+    </script>
+    <script>
+        // 验证信息
+        var username =document.querySelector('#username');
+        var phone =document.querySelector('#phone');
+        var password =document.querySelector('#password');
+        var password2 =document.querySelector('#password2');
+    
+        var tips = document.querySelector(".tips");
+        var tipsphone = document.querySelector(".tips-phone");
+        var tipspassword =document.querySelector('.tips-password');
+        var tipspassword2 =document.querySelector('.tips-password2');
+        var btn =document .querySelector(".btn");
+        var set = document.querySelector('.set');
+        var test =document.querySelector(".test");
+
+        var spring =document.querySelector('.spring-box');
+        var btnLeft = document.querySelector('.btn-left');
+        var btnRight =document.querySelector('.btn-right');
+
+            console.log(test);
+
+        console.log(tips);
+        console.log(tipsphone);
+      
+        username.onblur=()=>{      
+             if(username.value == '' || !(/[\u4e00-\u9fa5]{2,4}/.test(username.value))){
+                 tips.style.display = "block" ;
+             }else{
+                tips.style.display = "none" ;
+             }
+        }
+        phone.onblur=()=>{
+            if(phone.value == '' || !(/^1[3456789]\d{9}$/.test(phone.value))){
+                tipsphone.style.display = 'block';
+
+            }else{
+                tipsphone.style.display = 'none';
+            }
+        }
+        password.onblur=()=>{
+            if(password.value == '' ||!(/^[0-9]{6,9}$/.test(password.value))){
+                tipspassword.style.display = 'block';
+
+            }else{
+                tipspassword.style.display = 'none';
+            }
+        }
+        password2.onblur=()=>{
+            if(password.value != password2.value ){
+                tipspassword2.style.display = 'block';
+
+            }else{
+                tipspassword2.style.display = 'none';
+            }
+        }
+        btn.onclick=()=>{
+            if( username.value == '' || phone.value == '' || password.value != password2.value ){
+                alert('有信息未填写');
+            }else{
+                spring.style.display ='block';
+            }
+        }
+        set.onclick=()=>{
+            username.value == '';
+            phone.value == '';
+            password.value == '';
+            password2.value == '';
+            tips.style.display = 'none';
+            tipsphone.style.display = 'none';
+            tipspassword.style.display = 'none';
+            tipspassword2.style.display = 'none';
+
+
+        }
+        btnLeft.onclick=()=>{
+            spring.style.display ='none';
+        }
+      
+        btnRight.onclick=()=>{    
+            window.close();
+        }
+    </script>
+
+    <!-- <script>
+         $().ready(function() {
+            // 在键盘按下并释放及提交后验证提交表单
+            $("#submitdata").validate({
+                rules: { //验证规则
+                    username: {
+                        required: true,
+                        rangelength:[2,5]
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        maxlength:8
+                    },
+                    password2: {
+                        required: true,
+                        minlength: 6,
+                        maxlength:8,
+                        equalTo:"#password"
+                    },
+                    phone:{
+                        required:true,
+                        phone:'必须数字',
+                        minlength:11,
+                        maxlength:11
+                    }
+                },
+                messages:{
+                    username: {
+                        required: '请输入用户名',
+                        rangelength:'必须输入两个字符到五个字符之间'
+                    },
+                    password:{
+                        required:"密码必填",
+                        minlength:"六位到八位密码之间",
+                    },
+                    password2:{
+                        required:"密码必填",
+                        minlength:"六位到八位密码之间", 
+                        equalTo:"密码不一致"
+                        
+                    },
+                    phone:{
+                        required:true,
+                        phone:'必须数字',
+                        minlength:11,
+                        maxlength:11
+                    }
+                }
+            })
+        })
+    
+    </script> -->
+</body>
+</html>
